@@ -1,16 +1,33 @@
-<div id="{{user.id}}" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full max-w-screen-sm w-full bg-gray-300 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-    <div class="flex flex-col gap-4">
-        <div class="container">
-            <button type="button" onclick="toggleDrawer('{{user.id}}')" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-                <span class="material-symbols-outlined text-white">
+<div id="{{user.id}}" class="fixed top-0 right-0 z-40 flex flex-col h-full max-h-dvh max-w-screen-sm gap-4 p-2 md:p-6 transition-transform translate-x-full w-full bg-gray-50 dark:bg-gray-800 border-s-2 border-gray-200 dark:border-gray-700" tabindex="-1" aria-labelledby="drawer-right-label">
+    <div class="flex flex-row gap-3 md:gap-6 items-start dark:bg-gray-900 bg-gray-100 p-3 md:px-6 rounded-2xl border-2 border-gray-300 dark:border-gray-600">
+        <div class="flex flex-col gap-1 flex-shrink-0 justify-center h-full">
+            <img class="w-28 md:w-44 h-auto rounded-xl" src="{{user.profile_image.file.url}}">
+            <a href="#" class="p-2 text-md h-auto font-medium text-center text-white bg-blue-600 border-2 border-blue-700 rounded-lg">Message</a>
+            <a href="#" class="p-1 text-md h-auto font-medium text-center text-gray-900 border-2 dark:border-gray-700 border-gray-400 dark:text-white rounded-lg">Share</a>
+        </div>
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row w-full justify-between items-center">
+                <h5 class="font-bold text-3xl text-gray-900 dark:text-gray-300">{{user.name}}</h5>
+            <button type="button" onclick="toggleDrawer('{{user.id}}')">
+                <span class="material-symbols-outlined text-black dark:text-white">
                     close
                 </span>
             </button>
+            </div>
+            <p class="w-60 md:w-auto max-h-40 md:max-h-60 overflow-x-hidden overflow-y-auto pr-1 text-wrap text-gray-700 dark:text-gray-300">{{user.bio}}</p>
+        </div>  
+    </div>
+    <p class="text-4xl font-bold text-gray-700 dark:text-gray-300 mx-2">Services Offered:</p>
+    <div class="flex flex-col h-full overflow-y-auto gap-2 pr-2">
+        {% for service in user.services.all %}
+        <div class="flex flex-col gap-1 p-4 w-full bg-gray-100 border-2 border-gray-300 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-200 rounded-xl">
+            <div class="flex flex-row items-center w-full justify-between">
+                <h5 class="text-xl font-semibold text-gray-700 dark:text-gray-300">{{ service.service_type }}</h5>
+                <h5 class="text-xl text-gray-700 dark:text-gray-300">${{ service.rate }}/hr</h5>
+            </div>
+            <p class="text-lg text-gray-600 dark:text-gray-300">{{ service.locality.place_name }}, {{ service.locality.state_name }}</p>        
+            <p class="text-lg text-gray-600 dark:text-gray-100">{{ service.description }}</p>  
         </div>
-        <div>
-            <h5 class="items-center mb-4 text-base font-semibold text-xl text-gray-500 dark:text-gray-400">{{user.name}}</h5>
-        </div>
-        <a href="#" class="px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Learn more</a>
-        <a href="#" class="px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Learn more</a>
+        {% endfor %}
     </div>
 </div>

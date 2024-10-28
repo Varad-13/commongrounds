@@ -13,11 +13,6 @@ class Userprofile(models.Model):
     isConsultant = models.BooleanField(default=False)
     isVenueManager = models.BooleanField(default=False)
 
-class Timings(models.Model):
-    daysofweek = models.IntegerField(default=1111111)
-    starthour = models.TimeField()
-    endhour = models.TimeField()
-
 class Locality(models.Model):
     postcode = models.IntegerField(unique=True, primary_key=True)
     place_name = models.TextField()
@@ -31,15 +26,15 @@ class Address(models.Model):
     Locality = models.ForeignKey(Locality, on_delete=models.CASCADE)
     google_embed_link = models.URLField()
 
-class ServiceTypes(models.Model):
-    service_name = models.TextField()
-    service_category = models.TextField()
-
 class Service(models.Model):
-    service_type = models.ForeignKey(ServiceTypes, on_delete=models.CASCADE, related_name='services')
+    SERVICE_TYPE_CHOICES = [
+        ('Resume Consultation', 'Resume Consultation'),
+        ('Fitness Training', 'Fitness Training'),
+        ('Board Games', 'Board Games'),
+    ]
+    service_type = models.CharField(max_length=20, choices=SERVICE_TYPE_CHOICES)
     provider = models.ForeignKey(Userprofile, on_delete=models.CASCADE, related_name='services')
     description = models.TextField()
-    timings = models.ForeignKey(Timings, on_delete=models.CASCADE)
     rate = models.FloatField()
     locality = models.ForeignKey(Locality, on_delete=models.CASCADE)
 
@@ -47,7 +42,6 @@ class Venue(models.Model):
     venue_name = models.TextField()
     venue_images = models.ManyToManyField(Image)
     venue_manager = models.ForeignKey(Userprofile, on_delete=models.CASCADE, related_name='venues')
-    timings = models.ForeignKey(Timings, on_delete=models.CASCADE)
     description = models.TextField()
     rate = models.FloatField()
     address = models.ForeignKey(Address, on_delete=models.CASCADE)

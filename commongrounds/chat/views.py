@@ -149,9 +149,11 @@ def create_chat(request):
                 chat=chat
             )
             if "resume" in title.lower():
-                providers = Service.objects.filter(service_type__service_name = "Resume Consultation")
+                providers = Service.objects.filter(service_type = "Resume Consultation")
             elif "fitness" in title.lower():
-                providers = Service.objects.filter(service_type__service_name = "Fitness Training")
+                providers = Service.objects.filter(service_type = "Fitness Training")
+            elif "board" in title.lower():
+                providers = Service.objects.filter(service_type = "Board Games")
             elif "boss_mode" == title.lower():
                 providers = Service.objects.all()
             else:
@@ -172,9 +174,11 @@ def create_chat(request):
                 person["id"] = provider.provider.id
                 person["username"] = provider.provider.name
                 person["bio"] = provider.provider.bio
-                person["service_provided"] = provider.service_type.service_name
+                person["service_provided"] = provider.service_type
                 person["service_description"] = provider.description
                 person["rate_per_hour"] = provider.rate
+                person["place"] = provider.locality.place_name
+                person["state"] = provider.locality.state_name
                 llm_context.append(person)
             context_str = json.dumps(llm_context, indent=4)
             if "boss_mode" != title.lower():

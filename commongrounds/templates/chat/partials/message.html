@@ -1,5 +1,5 @@
 {% if message.sender == "assistant" %}
-<div class="flex flex-col gap-2 p-4 self-start max-w-2xl mr-3">
+<div class="flex flex-col gap-2 p-4 self-start max-w-2xl">
     <div class="flex flex-inline gap-1 text-gray-600 dark:text-gray-400">
         <span class="material-symbols-outlined text-gray-600 dark:text-gray-400">
             support_agent
@@ -11,7 +11,7 @@
     {% else %}
     <p class="text-md font-normal border-0 text-gray-900 dark:text-white">{{ message.content }}</p>
     {% endif %}
-    <div class="text-center grid w-full grid-cols-3 max-w-lg gap-4">
+    <div class="text-center max-w-xs flex overflow-y-auto gap-2 pb-2">
     {% for user in message.context.all %}
         {% include 'chat/partials/person_card.html' %}
     {% endfor %}
@@ -34,6 +34,7 @@
             </span>
             <p class="underline">System</p>
         </div>
-    <p class="text-md font-normal border-0 text-gray-900 dark:text-white">{{ message.content }}</p>
-</div>-->
+        <p class="text-md font-normal border-0 text-gray-900 dark:text-white">{{ message.content }}</p>
+    </div>
+-->
 {% endif %}
